@@ -1,4 +1,4 @@
-import { EntityManager as EntityManager } from "./entities/entityManager.js";
+import { EntityManager } from "./entities/entityManager.js";
 import { EntityTest } from "./entities/entityTest.js";
 import { Player } from "./entities/player.js";
 
