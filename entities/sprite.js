@@ -1,4 +1,4 @@
-import { Entity } from './Entity.js';
+import { Entity } from './entity.js';
 
 export class Sprite extends Entity {
     constructor(game, x, y, width, height, momentumX, momentumY) {

@@ -1,6 +1,6 @@
-import { EntityManager as EntityManager } from "./Entities/entityManager.js";
-import { EntityTest } from "./Entities/entityTest.js";
-import { Player } from "./Entities/player.js";
+import { EntityManager as EntityManager } from "./entities/entityManager.js";
+import { EntityTest } from "./entities/entityTest.js";
+import { Player } from "./entities/player.js";
 
 export class World {
     constructor(game, input) {

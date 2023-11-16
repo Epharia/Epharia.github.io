@@ -1,4 +1,4 @@
-import { Sprite } from "./Sprite.js";
+import { Sprite } from "./sprite.js";
 
 export class Player extends Sprite {
     constructor(game, input) {
