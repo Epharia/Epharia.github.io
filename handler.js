@@ -11,7 +11,7 @@ export class Handler {
     static init(game) {
         Handler.game = game;
         Handler.input = new InputHandler();
-        Handler.world = new World(this, this.input.keys);
+        Handler.world = new World();
     }
 
     static get height() {

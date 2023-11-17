@@ -8,10 +8,10 @@ export class World {
         this.entities = new EntityManager();
 
         let player = new Player();
-        let test = new EntityTest(0, Handler.height-64, 600, -1000);
+        let test = new EntityTest(200, Handler.height-64);
         let test2 = new EntityTest( 0, Handler.height-64, 500, -2000);
 
-        this.entities.add(player);
+        this.entities.add(test, player);
     }
 
     tick() {

@@ -1,13 +1,11 @@
 import { Handler } from "../handler.js";
 import { Sprite } from "./sprite.js";
 
-export class Player extends Sprite {
+export class Player extends Sprite { //TODO REWORK (use Vector2D)
     constructor() {
-        super(20, 0, 64, 64, 0, 0);
+        super(20, Handler.height);
 
         this.input = Handler.input.keys;
-
-        this.pos.y = Handler.height - this.height;
         
         this.speed = 750;
 
@@ -18,7 +16,7 @@ export class Player extends Sprite {
         this.toggledDash = false;
         this.dashTimer = 0;
         
-        this.isFaceRight = true;
+        this.facing = 1;
 
         this.img = new Image();
         this.img.src = "./assets/player.png";
@@ -54,10 +52,10 @@ export class Player extends Sprite {
         let left = this.input.includes('KeyA'), right = this.input.includes('KeyD');
         if(right && !left) {
             this.momentum.x += 3000 * Handler.delta;
-            if(this.dashTimer<=0) this.isFaceRight = true;
+            if(this.dashTimer<=0) this.facing = 1;
         } else if(!right && left) {
             this.momentum.x -= 3000 * Handler.delta;
-            if(this.dashTimer<=0) this.isFaceRight = false;
+            if(this.dashTimer<=0) this.facing = -1;
         } else if(Math.abs(this.momentum.x) > 1) {
             if(this.onGround) this.momentum.x += Math.sign(this.momentum.x) * -1000 * Handler.delta;
         } else this.momentum.x = 0;
@@ -76,7 +74,7 @@ export class Player extends Sprite {
 
         if(this.dashTimer > 0) {
             this.momentum.y = 0;
-            this.momentum.x = 2000 * (this.isFaceRight ? 1 : -1);
+            this.momentum.x = 2000 * this.facing;
         } else {
             //Limit speed if not dashing
             if(this.momentum.x > this.speed)  this.momentum.x = this.speed;
