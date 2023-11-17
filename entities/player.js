@@ -1,13 +1,14 @@
+import { Handler } from "../handler.js";
 import { Sprite } from "./sprite.js";
 
 export class Player extends Sprite {
-    constructor(game, input) {
-        super(game, 20, 0, 64, 64, 0, 0);
+    constructor() {
+        super(20, 0, 64, 64, 0, 0);
 
-        this.input = input
+        this.input = Handler.input.keys;
 
-        this.pos.y = this.game.height - this.height;
-
+        this.pos.y = Handler.height - this.height;
+        
         this.speed = 750;
 
         this.toggledJump = false;
@@ -23,7 +24,7 @@ export class Player extends Sprite {
         this.img.src = "./assets/player.png";
     }
 
-    tick(delta) {
+    tick() {
         //Reset Dash
         if(this.onGround && this.dashTimer <= 0) {
             this.hasDash = true;
@@ -52,13 +53,13 @@ export class Player extends Sprite {
         //Horizontal Movement
         let left = this.input.includes('KeyA'), right = this.input.includes('KeyD');
         if(right && !left) {
-            this.momentum.x += 3000 * delta;
+            this.momentum.x += 3000 * Handler.delta;
             if(this.dashTimer<=0) this.isFaceRight = true;
         } else if(!right && left) {
-            this.momentum.x -= 3000 * delta;
+            this.momentum.x -= 3000 * Handler.delta;
             if(this.dashTimer<=0) this.isFaceRight = false;
         } else if(Math.abs(this.momentum.x) > 1) {
-            if(this.onGround) this.momentum.x += Math.sign(this.momentum.x) * -1000 * delta;
+            if(this.onGround) this.momentum.x += Math.sign(this.momentum.x) * -1000 * Handler.delta;
         } else this.momentum.x = 0;
 
         //Dash
@@ -85,13 +86,13 @@ export class Player extends Sprite {
         if(this.dashTimer > -15) --this.dashTimer;
 
         //Update Positon
-        super.updatePosition(delta);
+        super.updatePosition();
 
         //Gravity
         let fallingCoef = (jump ? 1 : 2);
         let jumpCoef = (jump ? 1 : 4);
         if(this.momentum.y < 1200 * fallingCoef)
-            this.momentum.y += 2500 * delta * (this.momentum.y < 0 ? jumpCoef : fallingCoef);
+            this.momentum.y += 2500 * Handler.delta * (this.momentum.y < 0 ? jumpCoef : fallingCoef);
         else this.momentum.y = 1200 * fallingCoef;
     }
 

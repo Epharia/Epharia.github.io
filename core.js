@@ -1,5 +1,4 @@
-import { InputHandler } from './input.js';
-import { World } from './world.js';
+import { Handler } from './handler.js';
 
 window.addEventListener('load', function() {
     const canvas = document.getElementById('canvas');
@@ -15,11 +14,11 @@ window.addEventListener('load', function() {
         constructor(width, height) {
             this.width = width;
             this.height = height;
-            this.input = new InputHandler();
-            this.world = new World(this, this.input.keys);
+
+            Handler.init(this);
         }
-        tick(delta) {
-            if(this.input.keys.includes('Escape')) {
+        tick() {
+            if(Handler.input.keys.includes('Escape')) {
                 if(!toggledPause) {
                     isPaused = !isPaused;
                     toggledPause = true;
@@ -27,11 +26,11 @@ window.addEventListener('load', function() {
             }
             else {toggledPause = false;}
             if(!isPaused) {
-                this.world.tick(delta);
+                Handler.world.tick();
             }
         }
         render(ctx) {
-            this.world.render(ctx);
+            Handler.world.render(ctx);
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
             if(isPaused) ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -39,17 +38,16 @@ window.addEventListener('load', function() {
 
     const game = new Game(canvas.width,canvas.height);
 
-    let delta = 0;
     let lastTime = 0;
 
     function loop(time) {
-        delta = (time - lastTime) / 1000;
-        delta = Math.min(delta, 0.1);
+        Handler.delta = (time - lastTime) / 1000;
+        Handler.delta = Math.min(Handler.delta, 0.1);
         lastTime = time;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        game.tick(delta);
+        game.tick();
         game.render(ctx);
 
         requestAnimationFrame(loop);

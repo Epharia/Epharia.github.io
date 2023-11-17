@@ -3,9 +3,9 @@ export class EntityManager {
         this.entities = [];
     }
 
-    tick(delta) {
+    tick() {
         this.entities.forEach(e => {
-            e.tick(delta);
+            e.tick();
         });
     }
 

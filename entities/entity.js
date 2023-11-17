@@ -1,9 +1,8 @@
 export class Entity {
-    constructor(game, x, y) {
-        this.game = game;
+    constructor(x, y) {
         this.pos = {x: x, y: y};
     }
 
-    tick(delta) {}
+    tick() {}
     render(ctx) {}
 }

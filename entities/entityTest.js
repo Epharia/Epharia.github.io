@@ -1,8 +1,8 @@
 import { Sprite } from "./sprite.js";
 
 export class EntityTest extends Sprite {
-    constructor(game, x, y, mx, my) {
-        super(game, x, y, 64, 64, mx, my);
+    constructor(x, y, mx, my) {
+        super(x, y, 64, 64, mx, my);
     }
 
     render(ctx) {
