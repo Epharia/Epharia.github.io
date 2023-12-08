@@ -51,7 +51,6 @@ export class Sprite extends Entity {
 
     checkCollision(target) {
         this.color = 'RED';
-        if(this == target) return;
         if(this.aabb.at(this.pos).intersects(target.aabb.at(target.pos))) {
             this.color = 'GREEN';
         }

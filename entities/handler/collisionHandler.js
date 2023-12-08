@@ -29,7 +29,10 @@ export class CollisionHandler {
 
             for(let i = 0; i < returnObjects.length; ++i) {
                 let target = returnObjects[i];
-                if(cur == target) continue;
+
+                if(cur.s === target.s) {
+                    continue;
+                }
 
                 cur.s.checkCollision(target.s);
             }
@@ -116,7 +119,6 @@ class QuadTree {
             let index = this.getIndex(entry);
 
             if(index != -1) {
-                console.log(index);
                 this.nodes[index].insert(entry);
                 return;
             }
