@@ -18,4 +18,8 @@ export class EntityManager {
     add(...e) {
         this.entities.push(...e);
     }
+
+    get list() {
+        return this.entities;
+    }
 }

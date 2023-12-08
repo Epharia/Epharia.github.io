@@ -16,4 +16,20 @@ export class AABB {
                 this.origin.y < target.origin.y + target.dimensions.y &&
                 this.origin.y + this.dimensions.y > target.origin.y);
     }
+
+    get x() {
+        return this.origin.x;
+    }
+    
+    get y() {
+        return this.origin.y;
+    }
+
+    get w() {
+        return this.dimensions.x;
+    }
+    
+    get h() {
+        return this.dimensions.y;
+    }
 }

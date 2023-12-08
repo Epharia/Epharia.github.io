@@ -9,6 +9,7 @@ export class Player extends Sprite { //TODO REWORK (use Vector2D)
         
         this.speed = 750;
 
+        this.jumpPower = 1200
         this.toggledJump = false;
         this.jumpBuffer = 0;
 
@@ -41,7 +42,7 @@ export class Player extends Sprite { //TODO REWORK (use Vector2D)
 
         if(this.jumpBuffer > 0) {
             if(this.onGround  && this.dashTimer <= 0) {
-                this.momentum.y = -1200 - Math.min(this.speed, Math.abs(this.momentum.x))*0.3;
+                this.momentum.y = -this.jumpPower - Math.min(this.speed, Math.abs(this.momentum.x))*0.3;
                 this.onGround = false;
                 this.jumpBuffer = 0;
             }
