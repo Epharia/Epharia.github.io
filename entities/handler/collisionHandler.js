@@ -83,11 +83,10 @@ class QuadTree {
         this.nodes[0] = new QuadTree(this.level + 1, new Bound(x + subWidth, y, subWidth, subHeight));
         this.nodes[1] = new QuadTree(this.level + 1, new Bound(x, y, subWidth, subHeight));
         this.nodes[2] = new QuadTree(this.level + 1, new Bound(x, y + subHeight, subWidth, subHeight));
-        this.nodes[0] = new QuadTree(this.level + 1, new Bound(x + subWidth, y + subHeight, subWidth, subHeight));
+        this.nodes[3] = new QuadTree(this.level + 1, new Bound(x + subWidth, y + subHeight, subWidth, subHeight));
     }
 
     getIndex(entry) {
-        // console.log(entry);
         let index = -1;
         let vertMid = this.bounds.x + (this.bounds.w / 2);
         let horiMid = this.bounds.y + (this.bounds.h / 2);
@@ -117,6 +116,7 @@ class QuadTree {
             let index = this.getIndex(entry);
 
             if(index != -1) {
+                console.log(index);
                 this.nodes[index].insert(entry);
                 return;
             }
