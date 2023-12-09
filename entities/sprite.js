@@ -27,8 +27,8 @@ export class Sprite extends Entity {
         this.pos.addScaled(this.momentum, Handler.delta);
 
         //Bounds (TEMP CODE)
-        if(this.pos.y > Handler.height - this.height) {
-            this.pos.y = Handler.height - this.height;
+        if(this.pos.y > Handler.world.height - this.height) {
+            this.pos.y = Handler.world.height - this.height;
             this.onGround = true;
             this.momentum.y = 0;
         } else if(this.pos.y < 0) {
@@ -39,12 +39,12 @@ export class Sprite extends Entity {
         if(this.pos.x < 0) {
             this.pos.x = 0;
             this.momentum.x = 0;
-        } else if(this.pos.x > Handler.width - this.width) {
-            this.pos.x = Handler.width - this.width;
+        } else if(this.pos.x > Handler.world.width - this.width) {
+            this.pos.x = Handler.world.width - this.width;
             this.momentum.x = 0;
         }
     }
-
+d
     gravity() {
         this.momentum.y += 4000 * Handler.delta;
     }

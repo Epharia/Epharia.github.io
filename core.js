@@ -34,9 +34,15 @@ window.addEventListener('load', function() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
             if(isPaused) ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
+        get displayW() {
+            return this.width;
+        }
+        get displayH() {
+            return this.height;
+        }
     }
 
-    const game = new Game(canvas.width,canvas.height);
+    const game = new Game(canvas.width, canvas.height);
 
     let lastTime = 0;
 
@@ -49,6 +55,8 @@ window.addEventListener('load', function() {
 
         game.tick();
         game.render(ctx);
+
+        ctx.resetTransform();
 
         requestAnimationFrame(loop);
     }
