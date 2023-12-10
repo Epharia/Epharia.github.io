@@ -12,13 +12,22 @@ export class Handler {
         Handler.game = game;
         Handler.input = new InputHandler();
         Handler.world = new World();
+        Handler.world.init();
     }
 
     static get height() {
-        return Handler.game.height;
+        return Handler.world.height;
     }
 
     static get width() {
+        return Handler.world.width;
+    }
+
+    static get canvasWidth() {
         return Handler.game.width;
+    }
+
+    static get canvasHeight() {
+        return Handler.game.height;
     }
 }

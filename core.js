@@ -31,14 +31,10 @@ window.addEventListener('load', function() {
         }
         render(ctx) {
             Handler.world.render(ctx);
-            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-            if(isPaused) ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        get displayW() {
-            return this.width;
-        }
-        get displayH() {
-            return this.height;
+            if(isPaused) {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
         }
     }
 

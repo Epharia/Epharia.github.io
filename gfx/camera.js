@@ -8,24 +8,22 @@ export class Camera {
 
     centerOnEntity(e) {
 		if (e == null) return;
-		this.xOffset = Handler.game.width/2 - e.pos.x;
-		this.yOffset = Handler.game.height/2 - e.pos.y;
+		this.xOffset = e.pos.x + e.width/2 - Handler.game.width/2;
+		this.yOffset = e.pos.y + e.height/2 - Handler.game.height/2;
 	}
 
-    checkLimit() { //TODO
-        // if (this.xOffset > Handler.world.width/2 - Handler.game.displayW/2) {
-        //     this.xOffset = Handler.world.width/2 - Handler.game.displayW/2;
-        //     console.log(this.xOffset);
-        // } else if (this.xOffset < -Handler.world.width/2 + Handler.game.displayW/2) {
-        //     this.xOffset = -Handler.world.width/2 + Handler.game.displayW/2;
-        //     console.log(this.xOffset);
-        // }
+    checkLimit() {
+        if (this.xOffset < 0) {
+            this.xOffset = 0;
+        } else if (this.xOffset > Handler.width - Handler.canvasWidth) {
+            this.xOffset = Handler.width - Handler.canvasWidth;
+        }
     
-        // if (this.yOffset < -Handler.world.height/2 + Handler.game.displayH/2) {
-        //     this.yOffset = -Handler.world.height/2 + Handler.game.displayH/2;
-        // } else if (this.yOffset > Handler.world.height/2 - Handler.game.displayH/2) {
-        //     this.yOffset = Handler.world.height/2 - Handler.game.displayH/2;
-        // }
+        if (this.yOffset < 0) {
+            this.yOffset = 0;
+        } else if (this.yOffset > Handler.height - Handler.canvasHeight) {
+            this.yOffset = Handler.height - Handler.canvasHeight;
+        }
 	}
 
     move(x = 0, y = 0) {
