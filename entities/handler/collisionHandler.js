@@ -1,4 +1,3 @@
-import { Handler } from "../../handler.js";
 import { Sprite } from "../sprite.js";
 
 const MAX_OBJECTS = 5;
@@ -48,8 +47,7 @@ export class CollisionHandler {
 class Entry {
     constructor(sprite) {
         this.s = sprite;
-        this.aabb = sprite.aabb;
-        this.p = sprite.pos.copy;
+        this.aabb = sprite.aabb.at(sprite.pos);
     }
 }
 
@@ -99,16 +97,16 @@ class QuadTree {
         let vertMid = this.bounds.x + (this.bounds.w / 2);
         let horiMid = this.bounds.y + (this.bounds.h / 2);
 
-        let topQuads = (entry.p.y < horiMid && entry.p.y + entry.aabb.h < horiMid);
-        let botQuads = (entry.p.y > horiMid);
+        let topQuads = (entry.aabb.y < horiMid && entry.aabb.y + entry.aabb.h < horiMid);
+        let botQuads = (entry.aabb.y > horiMid);
 
-        if(entry.p.x < vertMid && entry.p.x + entry.aabb.w < vertMid) {
+        if(entry.aabb.x < vertMid && entry.aabb.x + entry.aabb.w < vertMid) {
             if(topQuads) {
                 index = 1;
             } else if(botQuads) {
                 index = 2;
             }
-        } else if(entry.p.x > vertMid) {
+        } else if(entry.aabb.x > vertMid) {
             if(topQuads) {
                 index = 0;
             } else if(botQuads) {

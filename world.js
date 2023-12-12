@@ -22,7 +22,7 @@ export class World {
         let test = new EntityTest(200, this.height-64);
         let test2 = new EntityTest(500, this.height-64);
 
-        this.entities.add(new EntityTest(280, this.height-64), new EntityTest(120, this.height-64), new EntityTest(15, this.height-64), new EntityTest(1000, this.height-64), test, test2, this.player);
+        this.entities.add(new EntityTest(350, this.height-64), new EntityTest(120, this.height-64), new EntityTest(15, this.height-64), new EntityTest(1000, this.height-64), test, test2, this.player);
     }
 
     tick() {

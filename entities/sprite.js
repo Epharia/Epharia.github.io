@@ -52,9 +52,11 @@ d
     }
 
     checkCollision(target) {
-        if (target === Handler.world.player) this.color = 'blue';
+        if (this === Handler.world.player) target.color = 'blue';
+        else if (target === Handler.world.player) this.color = 'blue';
         if(this.aabb.at(this.pos).intersects(target.aabb.at(target.pos))) {
             this.color = 'GREEN';
+            target.color = 'GREEN';
         }
     }
 }
