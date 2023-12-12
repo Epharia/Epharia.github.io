@@ -21,6 +21,8 @@ export class Sprite extends Entity {
     tick() {
         this.updatePosition();
         this.gravity();
+
+        this.color = 'red';
     }
 
     updatePosition() {
@@ -50,7 +52,7 @@ d
     }
 
     checkCollision(target) {
-        this.color = 'RED';
+        if (target === Handler.world.player) this.color = 'blue';
         if(this.aabb.at(this.pos).intersects(target.aabb.at(target.pos))) {
             this.color = 'GREEN';
         }

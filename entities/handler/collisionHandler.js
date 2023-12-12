@@ -1,11 +1,12 @@
+import { Handler } from "../../handler.js";
 import { Sprite } from "../sprite.js";
 
 const MAX_OBJECTS = 5;
 const MAX_LEVELS = 5;
 
 export class CollisionHandler {
-    constructor() {
-        this.q = new QuadTree(0, new Bound(0, 0, 1920, 1080));
+    constructor(width, height) {
+        this.q = new QuadTree(0, new Bound(0, 0, width, height));
     }
 
     process(manager) {
@@ -15,6 +16,7 @@ export class CollisionHandler {
 
         this.q.clear();
         let objects = [];
+        
         for(let entity of entities) {
             if(!(entity instanceof Sprite)) continue;
             let e = new Entry(entity);
@@ -22,9 +24,8 @@ export class CollisionHandler {
             this.q.insert(e);
         }
 
-        let returnObjects = [];
         for(let cur of objects) {
-            returnObjects.clear;
+            let returnObjects = [];
             this.q.retrieve(returnObjects, cur);
 
             for(let i = 0; i < returnObjects.length; ++i) {
@@ -37,6 +38,10 @@ export class CollisionHandler {
                 cur.s.checkCollision(target.s);
             }
         }
+    }
+
+    show(ctx) {
+        this.q.show(ctx);
     }
 }
 
@@ -62,11 +67,11 @@ class QuadTree {
         this.level = level;
         this.objects = [];
         this.bounds = bounds;
-        this.nodes = [null,null,null,null]; //TODO remove null
+        this.nodes = [];
     }
 
     clear() {
-        this.objects.clear;
+        this.objects = [];
 
         for(let i = 0; i < this.nodes.length; ++i) {
             if(this.nodes[i] != null) {
@@ -77,10 +82,10 @@ class QuadTree {
     }
 
     split() {
-        let subWidth = this.bounds.width / 2,
-        subHeight = this.bounds.height / 2,
-        x = this.bounds.x,
-        y = this.bounds.y;
+        let subWidth = this.bounds.w / 2;
+        let subHeight = this.bounds.h / 2;
+        let x = this.bounds.x;
+        let y = this.bounds.y;
 
         //Quadrants I-IV
         this.nodes[0] = new QuadTree(this.level + 1, new Bound(x + subWidth, y, subWidth, subHeight));
@@ -94,16 +99,16 @@ class QuadTree {
         let vertMid = this.bounds.x + (this.bounds.w / 2);
         let horiMid = this.bounds.y + (this.bounds.h / 2);
 
-        let topQuads = (entry.p.y - entry.aabb.h/2 < horiMid && entry.p.y + entry.aabb.h/2 < horiMid);
-        let botQuads = (entry.p.y - entry.aabb.h/2 > horiMid);
+        let topQuads = (entry.p.y < horiMid && entry.p.y + entry.aabb.h < horiMid);
+        let botQuads = (entry.p.y > horiMid);
 
-        if(entry.p.x - entry.aabb.w/2 < vertMid && entry.p.x + entry.aabb.w/2 < vertMid) {
+        if(entry.p.x < vertMid && entry.p.x + entry.aabb.w < vertMid) {
             if(topQuads) {
                 index = 1;
             } else if(botQuads) {
                 index = 2;
             }
-        } else if(entry.p.x - entry.aabb.w/2 > vertMid) {
+        } else if(entry.p.x > vertMid) {
             if(topQuads) {
                 index = 0;
             } else if(botQuads) {
@@ -151,5 +156,20 @@ class QuadTree {
 
         returnObjects.push(...this.objects);
         return returnObjects;
+    }
+
+    /**
+     * @deprecated
+     * TEMP (Delete later!)
+     */
+    show(ctx) {
+        // let alpha = 0.1 + 0.1 * this.level;
+        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.lineWidth = 5;
+        ctx.strokeRect(this.bounds.x, this.bounds.y, this.bounds.w, this.bounds.h);
+        for(let node of this.nodes) {
+            if(node != null)
+            node.show(ctx);
+        }
     }
 }

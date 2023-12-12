@@ -7,6 +7,10 @@ window.addEventListener('load', function() {
     let isPaused = false;
     let toggledPause = false;
 
+    let frameCtr = 0;
+    let fps = 60;
+    let frameTimer = 0;
+
     canvas.width=1920;
     canvas.height=1080;
 
@@ -30,11 +34,28 @@ window.addEventListener('load', function() {
             }
         }
         render(ctx) {
+            ++frameCtr;
+
+            //GAME
             Handler.world.render(ctx);
+
+            //UI
             if(isPaused) {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
+
+            //TEMP (FPS output)
+            frameTimer += Handler.delta;
+            if(frameTimer >= 1) {
+                fps = frameCtr;
+                frameCtr = 0;
+                frameTimer = Handler.delta;
+            }
+            
+            ctx.fillStyle = 'white';
+            ctx.font = "20px Arial";
+            ctx.fillText(fps, 10, 25);
         }
     }
 
