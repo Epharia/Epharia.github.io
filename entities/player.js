@@ -1,4 +1,5 @@
 import { Handler } from "../handler.js";
+import { Vector2D } from "../util/vector2D.js";
 import { Sprite } from "./sprite.js";
 
 export class Player extends Sprite {
@@ -12,8 +13,7 @@ export class Player extends Sprite {
         this.toggledDash = false;
         this.dashTimer = 0;
         
-        this.facingH = 0;
-        this.facingV = 0;
+        this.facing = new Vector2D();
 
         this.img = new Image();
         this.img.src = "./assets/sprites/player.png";
@@ -21,24 +21,26 @@ export class Player extends Sprite {
 
     tick() {
         //Horizontal Movement
-        let left = this.input.includes('KeyA'), right = this.input.includes('KeyD');
+        let left = this.input.includes('KeyA') || this.input.includes('ArrowLeft'),
+        right = this.input.includes('KeyD') || this.input.includes('ArrowRight');
         if(right && !left) {
-            if(this.dashTimer<=0) this.facingH = 1;
+            if(this.dashTimer<=0) this.facing.x = 1;
         } else if(!right && left) {
-            if(this.dashTimer<=0) this.facingH = -1;
+            if(this.dashTimer<=0) this.facing.x = -1;
         } else {
-            if(this.dashTimer<=0) this.facingH = 0;
+            if(this.dashTimer<=0) this.facing.x = 0;
         }
 
         //Horizontal Movement
-        let up = this.input.includes('KeyW'), down = this.input.includes('KeyS');
+        let up = this.input.includes('KeyW') || this.input.includes('ArrowUp'),
+        down = this.input.includes('KeyS') || this.input.includes('ArrowDown');
         if(up && !down) {
-            if(this.dashTimer<=0) this.facingV = -1;
+            if(this.dashTimer<=0) this.facing.y = -1;
         } else if(!up && down) {
-            if(this.dashTimer<=0) this.facingV = 1;
+            if(this.dashTimer<=0) this.facing.y = 1;
         } else {
             this.momentum.y = 0;
-            if(this.dashTimer<=0) this.facingV = 0;
+            if(this.dashTimer<=0) this.facing.y = 0;
         }
 
         //Dash
@@ -52,8 +54,7 @@ export class Player extends Sprite {
             this.toggledDash = false;
         }
 
-        this.momentum.x = this.facingH;
-        this.momentum.y = this.facingV;
+        this.momentum = this.facing.copy;
 
         this.momentum.normalize();
         this.momentum.multiply(this.dashTimer > 0 ? 2000 : this.speed);

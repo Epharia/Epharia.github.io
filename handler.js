@@ -1,5 +1,5 @@
 import { InputHandler } from './input.js';
-import { World } from './world.js';
+import { World } from './world/world.js';
 
 export class Handler {
     /** @type {Number} */

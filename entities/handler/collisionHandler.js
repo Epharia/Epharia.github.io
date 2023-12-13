@@ -4,7 +4,7 @@ import { EntityManager } from "./entityManager.js";
 const MAX_OBJECTS = 5;
 const MAX_LEVELS = 5;
 
-export class CollisionHandler { //TODO maybe use spatial partioning instead of quadtree
+export class CollisionHandler { //TODO maybe use spatial partioning with cells instead of quadtree
     constructor(width, height) {
         this.q = new QuadTree(0, new Bound(0, 0, width, height));
     }

@@ -1,7 +1,7 @@
 export class Tile {
-    constructor(isSolid = false) {
+    constructor(texture = "wall",isSolid = false) {
         this.isSolid = isSolid;
         this.img = new Image();
-        this.img.src = "./assets/tiles/wall.png";
+        this.img.src = "./assets/tiles/" + texture + ".png";
     }
 }

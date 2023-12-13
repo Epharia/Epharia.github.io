@@ -1,25 +1,36 @@
 import { Handler } from "../handler.js";
-import { Tile } from "./tile.js";
+import { TilePalette } from "./tilepalette.js";
 
 const tileSize = 64;
 
 export class Tilemap {
     constructor() {
+        this.palette = new TilePalette();
+        this.palette.load();
         this.tiles = [];
     }
 
-    load() {
-        let temp = new Tile();
+    load(tiles) {
         for(let x = 0; x * tileSize < Handler.width; ++x) {
             this.tiles[x] = [];
             for(let y = 0; y * tileSize < Handler.height; ++y) {
-                this.tiles[x][y] = temp;
+                let id = tiles[y] != null ? tiles[y][x] != null ? tiles[y][x] : -1 : -1; //IDK... it works!
+                this.tiles[x][y] = this.palette.get(id);
             }
         }
+
+        // TODO delete (testing)
+        // let temp = this.palette.get(0);
+        // for(let x = 0; x * tileSize < Handler.width; ++x) {
+        //     this.tiles[x] = [];
+        //     for(let y = 0; y * tileSize < Handler.height; ++y) {
+        //         this.tiles[x][y] = temp;
+        //     }
+        // }
     }
 
     /**
-     * 
+     * renders this tilemap
      * @param {CanvasRenderingContext2D} ctx 
      */
     render(ctx) {

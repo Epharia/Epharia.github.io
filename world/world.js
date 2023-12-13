@@ -1,9 +1,9 @@
-import { EntityManager } from "./entities/handler/entityManager.js";
-import { EntityTest } from "./entities/entityTest.js";
-import { Player } from "./entities/player.js";
-import { CollisionHandler } from "./entities/handler/collisionHandler.js";
-import { Camera } from "./gfx/camera.js";
-import { Tilemap } from "./tiles/tilemap.js";
+import { EntityManager } from "../entities/handler/entityManager.js";
+import { EntityTest } from "../entities/entityTest.js";
+import { Player } from "../entities/player.js";
+import { CollisionHandler } from "../entities/handler/collisionHandler.js";
+import { Camera } from "../gfx/camera.js";
+import { Tilemap } from "../tiles/tilemap.js";
 
 export class World {
     constructor() {
@@ -18,14 +18,20 @@ export class World {
     }
 
     init() {
-        this.layer1.load();
+        this.load();
 
         this.player = new Player();
         let test = new EntityTest(1000, this.height-64*10);
 
-        // let test2 = new EntityTest(500, this.height-64);
-        // this.entities.add(new EntityTest(350, this.height-64), new EntityTest(120, this.height-64), new EntityTest(15, this.height-64), new EntityTest(250, this.height-64), test, test2, this.player);
         this.entities.add(test, this.player);
+    }
+
+    load(map = "test") {
+        fetch("./world/maps/" + map + ".json").then((res) => {return res.json()}).then((data) => {
+            this.width = data.width * 64;
+            this.height = data.height * 64;
+            this.layer1.load(data.layer1);
+        });
     }
 
     tick() {
