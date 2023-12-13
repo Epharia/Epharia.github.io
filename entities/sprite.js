@@ -10,7 +10,6 @@ export class Sprite extends Entity {
         this.height = height;
         
         this.momentum = new Vector2D(momentumX, momentumY);
-        this.onGround = true;
 
         this.aabb = new AABB();
         this.aabb.dimensions = new Vector2D(this.width, this.height);
@@ -20,8 +19,6 @@ export class Sprite extends Entity {
 
     tick() {
         this.updatePosition();
-        this.gravity();
-
         this.color = 'red';
     }
 
@@ -31,7 +28,6 @@ export class Sprite extends Entity {
         //Bounds (TEMP CODE)
         if(this.pos.y > Handler.world.height - this.height) {
             this.pos.y = Handler.world.height - this.height;
-            this.onGround = true;
             this.momentum.y = 0;
         } else if(this.pos.y < 0) {
             this.pos.y = 0;
@@ -46,17 +42,20 @@ export class Sprite extends Entity {
             this.momentum.x = 0;
         }
     }
-d
-    gravity() {
-        this.momentum.y += 4000 * Handler.delta;
+
+    /**
+     * check collision between this sprite and another
+     * @param {Sprite} other 
+     */
+    checkCollision(other) {
+        return this.aabb.at(this.pos).intersects(other.aabb.at(other.pos));
     }
 
-    checkCollision(target) {
-        if (this === Handler.world.player) target.color = 'blue';
-        else if (target === Handler.world.player) this.color = 'blue';
-        if(this.aabb.at(this.pos).intersects(target.aabb.at(target.pos))) {
-            this.color = 'GREEN';
-            target.color = 'GREEN';
-        }
+    /**
+     * called on collision
+     * @param {Sprite} other 
+     */
+    onCollision(other) {
+        this.color = 'GREEN';
     }
 }

@@ -69,7 +69,7 @@ export class Vector2D {
      * @return {[Number]}   Magnitude of the Vector in 3D
      */
     cross(u = this) {
-        return x * u.y - y * u.x;
+        return this.x * u.y - this.y * u.x;
     }
 
      /**
@@ -84,11 +84,11 @@ export class Vector2D {
 
     //Vector Stuff
     get magnitude() {
-        return Math.hypot(x,y);
+        return Math.hypot(this.x, this.y);
     }
 
     get magnitude2() {
-        return x * x + y * y;
+        return this.x * this.x + this.y * this.y;
     }
 
     normalize() {

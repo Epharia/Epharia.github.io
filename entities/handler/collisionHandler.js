@@ -1,27 +1,34 @@
 import { Sprite } from "../sprite.js";
+import { EntityManager } from "./entityManager.js";
 
 const MAX_OBJECTS = 5;
 const MAX_LEVELS = 5;
 
-export class CollisionHandler {
+export class CollisionHandler { //TODO maybe use spatial partioning instead of quadtree
     constructor(width, height) {
         this.q = new QuadTree(0, new Bound(0, 0, width, height));
     }
 
-    process(manager) {
-        let entities = manager.list;
-
+    /**
+     * Process collisions using a simple quadtree
+     * @param {EntityManager} entities a list of the entities to process
+     */
+    process(entities) {
         if(entities.length == 0) return;
 
         this.q.clear();
         let objects = [];
+
+        let i = 0;
         
         for(let entity of entities) {
             if(!(entity instanceof Sprite)) continue;
-            let e = new Entry(entity);
+            let e = new Entry(entity, i++);
             objects.push(e);
             this.q.insert(e);
         }
+
+        let collisions = [];
 
         for(let cur of objects) {
             let returnObjects = [];
@@ -30,24 +37,41 @@ export class CollisionHandler {
             for(let i = 0; i < returnObjects.length; ++i) {
                 let target = returnObjects[i];
 
-                if(cur.s === target.s) {
-                    continue;
-                }
+                if(cur.s === target.s) continue;
+                if(cur.checked[target.id]) continue;
 
-                cur.s.checkCollision(target.s);
+                target.checked[cur.id] = true;
+                if(cur.s.checkCollision(target.s)) {
+                    collisions.push({a: cur.s, b: target.s});
+                }
             }
+        }
+
+        //resolve collision later to avoid bugs (double collision)
+        for(let col of collisions) {
+            col.a.onCollision(col.b);
+            col.b.onCollision(col.a);
         }
     }
 
+    /**
+     * render quadtree
+     * @deprecated
+     * @param {*} ctx 
+     */
     show(ctx) {
         this.q.show(ctx);
     }
 }
 
 class Entry {
-    constructor(sprite) {
+    constructor(sprite, id = 0) {
+        this.id = id;
+
         this.s = sprite;
         this.aabb = sprite.aabb.at(sprite.pos);
+        
+        this.checked = [];
     }
 }
 

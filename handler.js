@@ -2,10 +2,14 @@ import { InputHandler } from './input.js';
 import { World } from './world.js';
 
 export class Handler {
+    /** @type {Number} */
     static delta;
-
     static game;
+    
+    /** @type {InputHandler} */
     static input;
+
+    /** @type {World} */
     static world;
 
     static init(game) {
@@ -23,7 +27,7 @@ export class Handler {
         return Handler.world.width;
     }
 
-    static get canvasWidth() {
+    static get canvasWidth() { //TODO remove and use canvas.width
         return Handler.game.width;
     }
 
