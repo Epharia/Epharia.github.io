@@ -1,7 +1,7 @@
 import { Tile } from "./tile.js";
 
 export class TilePalette {
-    static dev = new Tile("dev"); //TODO make Air?
+    static dev = new Tile("dev"); //TODO make air the default tile?
     constructor() {
         this.tiles = [];
     }
@@ -10,8 +10,9 @@ export class TilePalette {
         this.tiles = [];
         fetch("./tiles/palettes/" + name + ".json").then((res) => {return res.json()}).then((data) => {
             for(let d of data) {
-                let tile = new Tile(d.texture, d.solid);
+                let tile = new Tile(d.name, d.solid);
                 this.tiles.push(tile);
+                console.log(tile.img.src + " loaded");
             }
         });
     }

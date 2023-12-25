@@ -1,11 +1,7 @@
 export class System {
-    constructor() {
-        this.components = [];
+    constructor() { //future me problem
+        this.idk = []; //find a way to track components accessed by the system (pools? entity array? query? signal?)
     }
 
     process() {}
-
-    filterDeleted() {
-        this.components = this.components.filter(x => !x.isDeleted);
-    }
 }

@@ -48,7 +48,7 @@ export class Tilemap {
 
         for(let y = yMin; y < yMax; ++y) {
             for(let x = xMin; x < xMax; ++x) {
-                if(this.tiles[x][y]!=null)
+                if(this.tiles[x] != null && this.tiles[x][y]!=null)
                 ctx.drawImage(this.tiles[x][y].img, Math.floor(x*tileSize - camera.xOffset), Math.floor(y*tileSize - camera.yOffset), tileSize, tileSize);
             }
         }
