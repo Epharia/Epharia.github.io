@@ -21,7 +21,7 @@ export class World {
         this.load();
 
         this.player = new Player();
-        let test = new EntityTest(1000, this.height-64*10);
+        let test = new EntityTest(992, this.height-64*10+32);
 
         this.entities.add(test, this.player);
     }

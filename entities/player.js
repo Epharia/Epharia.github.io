@@ -63,9 +63,11 @@ export class Player extends Sprite {
 
         //Update Positon
         super.updatePosition();
+        this.color = 'black';
     }
 
     render(ctx) {
+        super.render(ctx);
         ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
     }
 }

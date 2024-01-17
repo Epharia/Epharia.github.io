@@ -12,7 +12,7 @@ export class TilePalette {
             for(let d of data) {
                 let tile = new Tile(d.name, d.solid);
                 this.tiles.push(tile);
-                console.log(tile.img.src + " loaded");
+                console.log(d.name + " loaded");
             }
         });
     }

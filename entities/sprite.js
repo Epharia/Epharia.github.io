@@ -14,12 +14,18 @@ export class Sprite extends Entity {
         this.aabb = new AABB();
         this.aabb.dimensions = new Vector2D(this.width, this.height);
 
-        this.color = 'red';
+        this.color = 'black';
+    }
+
+    render(ctx) {
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 3;
+        ctx.strokeRect(this.pos.x, this.pos.y, this.width, this.height);
     }
 
     tick() {
         this.updatePosition();
-        this.color = 'red';
+        this.color = 'black';
     }
 
     updatePosition() {
