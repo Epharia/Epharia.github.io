@@ -5,7 +5,7 @@ export class Handler {
     /** @type {Number} */
     static delta;
     static game;
-    
+
     /** @type {InputHandler} */
     static input;
 
@@ -27,10 +27,16 @@ export class Handler {
         return Handler.world.width;
     }
 
+    /**
+     * @deprecated
+     */
     static get canvasWidth() { //TODO remove and use canvas.width
         return Handler.game.width;
     }
 
+    /**
+     * @deprecated
+     */
     static get canvasHeight() {
         return Handler.game.height;
     }

@@ -45,14 +45,19 @@ export class Sprite extends EntityCollidable {
         }
     }
 
-    gravity() {
-        let G = 4000;
-        this.momentum.addScaled(Vector2D.down.multiply(G), Handler.delta)
+    gravity(G = 4000) {
+        this.momentum.addScaled(Vector2D.down.multiply(G), Handler.delta);
+        if (this.momentum.y > G / 2) {
+            this.momentum.y = G / 2;
+        }
+        console.log(this.momentum.y);
     }
 
     /**
      * @override
-     * @param {Sprite} other 
+     * @param {EntityCollidable} other 
      */
-    onCollision(other) { /*TODO*/ }
+    onCollision(other) {
+        other.color = 'green'
+    }
 }

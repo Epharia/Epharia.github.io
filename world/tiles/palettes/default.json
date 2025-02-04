@@ -1,0 +1,10 @@
+[
+    {
+        "solid": false,
+        "name": "dirt_temp"
+    },
+    {
+        "solid": true,
+        "name": "wall_temp"
+    }
+]

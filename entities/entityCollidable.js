@@ -14,7 +14,7 @@ export class EntityCollidable extends Entity {
 
     /**
     * check collision between this sprite and another
-    * @param {Sprite} other 
+    * @param {EntityCollidable} other 
     */
     checkCollision(other) {
         return this.aabb.at(this.pos).intersects(other.aabb.at(other.pos));
@@ -23,7 +23,7 @@ export class EntityCollidable extends Entity {
     /**
      * called on collision
      * @abstract
-     * @param {Sprite} other 
+     * @param {EntityCollidable} other 
      */
     onCollision(other) { }
 }

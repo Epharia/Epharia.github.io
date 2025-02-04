@@ -7,12 +7,12 @@
 }
 
 #canvas {
-    border: 5px solid black;
+    border: 2px solid black;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 95%;
-    max-height: 95%;
-    background-color: 	#1F1F1F;
+    max-width: 99%;
+    max-height: 99%;
+    background-color: #1F1F1F;
 }

@@ -6,6 +6,7 @@ export class Conf {
 
     //Keybinds
     static BINDS = {
+        pause: ["Escape"],
         left: ["ArrowLeft", "KeyA"],
         right: ["ArrowRight", "KeyD"],
         jump: ["ArrowUp", "KeyW", "Space"],

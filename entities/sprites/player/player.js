@@ -11,7 +11,7 @@ export class Player extends Sprite {
         this.cooldown = 0;
 
         this.speed = 750;
-        this.acc = 100;
+        this.acc = 75;
         this.modifier_air; //TODO
 
         this.facing = 0;
@@ -21,8 +21,9 @@ export class Player extends Sprite {
     }
 
     tick() {
+        this.color = 'black';
         this.move();
-        this.gravity();
+        this.gravity(Handler.input.keys.jump.held ? 4000 : 8000);
 
         //Update Positon
         super.updatePosition();
@@ -46,6 +47,7 @@ export class Player extends Sprite {
             this.facing = 0;
         }
 
+        //Teleport
         if (this.cooldown <= 0) {
             if (Handler.input.keys.time.pressed) {
                 this.cooldown = 100;
@@ -56,11 +58,13 @@ export class Player extends Sprite {
             --this.cooldown;
         }
 
+        //Jump
         if (this.grounded && Handler.input.keys.jump.pressed) {
-            this.momentum.y -= 1750;
+            this.momentum.y -= 1500 + 250 * (Math.abs(this.momentum.x) / this.speed);
             this.grounded = false;
         }
 
+        //Friction
         if (this.facing == 0) {
             let sign = Math.sign(this.momentum.x);
             if (this.momentum.x * sign > 50) {

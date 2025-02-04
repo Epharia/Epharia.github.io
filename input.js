@@ -2,6 +2,7 @@ import { Conf } from "./config.js"
 
 export class InputHandler {
     keys = {
+        pause: new Key(Conf.BINDS.pause),
         left: new Key(Conf.BINDS.left),
         right: new Key(Conf.BINDS.right),
         jump: new Key(Conf.BINDS.jump),
